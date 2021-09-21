@@ -12,16 +12,32 @@ public class MemberManagementController {
 
     //A list of new members
     private static final List<Member> MEMBERS = Arrays.asList(
-            new Member(1, "dannyjebb", "P4ssword"),
-            new Member(2, "katyjebb", "P4ssword"),
-            new Member(3, "emilyjebb", "P4ssword")
+            new Member(1, "dannyjebb", "P4ssword", 4.0f),
+            new Member(2, "mikedobson", "P4ssword", 18.7f),
+            new Member(3, "dancross", "P4ssword", 8.2f),
+            new Member(4, "leeoconnell", "P4ssword", 14.7f)
     );
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //pre authorise takes a string of hasRole, hasAnyRole etc
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_HANDICAPADMIN')") //pre authorise takes a string of hasRole, hasAnyRole etc
     public List<Member> getAllMembers() {
         System.out.println("getAllMembers");
         return MEMBERS;
+    }
+
+    @GetMapping(path = "{memberId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_HANDICAPADMIN')")
+    public Member getMember(@PathVariable("memberId") Integer memberId){
+        return MEMBERS.stream().filter(member -> memberId.equals(member.getMemberId()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Member " + memberId   + " does not exist" ));
+    }
+
+    @PutMapping(path = "{memberId}")
+    @PreAuthorize("hasAuthority('member:write')")
+    public void updateMember(@PathVariable("memberId") Integer memberId, @RequestBody Member member) {
+        System.out.println("updateMember");
+        System.out.println(String.format("%s %s", memberId, member));
     }
 
     @PostMapping
@@ -40,10 +56,5 @@ public class MemberManagementController {
         //TODO logic to delete member
     }
 
-    @PutMapping(path = "{memberId}")
-    @PreAuthorize("hasAuthority('member:write')")
-    public void updateMember(@PathVariable("memberId") Integer memberId, @RequestBody Member member) {
-        System.out.println("updateMember");
-        System.out.println(String.format("%s %s", memberId, member));
-    }
+
 }

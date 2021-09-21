@@ -1,7 +1,6 @@
 package com.example.security_demo.security;
 
 import com.google.common.collect.Sets;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -15,7 +14,8 @@ public enum ApplicationUserRole {
 
     MEMBER(Sets.newHashSet()),
     ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, EVENT_READ, EVENT_WRITE, MEMBER_READ, MEMBER_WRITE)),
-    EVENTADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, EVENT_READ, EVENT_WRITE));
+    EVENTADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, EVENT_READ, EVENT_WRITE)),
+    HANDICAPADMIN(Sets.newHashSet(MEMBER_READ, MEMBER_WRITE));
 
     private final Set<ApplicationUserPermission> permissions;
 

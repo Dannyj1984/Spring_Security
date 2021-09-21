@@ -13,10 +13,13 @@ public class Member {
 
     private String password;
 
-    public Member(Integer memberId, String username, String password) {
+    private float handicap;
+
+    public Member(Integer memberId, String username, String password, float handicap) {
         this.memberId = memberId;
         this.username = username;
         this.password = password;
+        this.handicap = handicap;
     }
 
 }

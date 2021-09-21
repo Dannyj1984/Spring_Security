@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import java.util.concurrent.TimeUnit;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true) //needed for preauthorization to work
@@ -35,10 +37,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll() // allow all requests to these endpoints
-                .antMatchers("/api/**").hasAnyRole(ApplicationUserRole.MEMBER.name(), ApplicationUserRole.ADMIN.name(), ApplicationUserRole.EVENTADMIN.name()) // All roles can access the open api pages once logged in
-                .antMatchers("/management/**").hasAnyRole(ApplicationUserRole.ADMIN.name(), ApplicationUserRole.EVENTADMIN.name()) // only admin or eventadmin can access management pages
-                //The below are replaced by preauthorisation annotation in the managementcontroller classes.
+                .antMatchers(  "/css/*", "/js/*").permitAll() // allow all requests to these endpoints
+                .antMatchers("/api/**").hasAnyRole(ApplicationUserRole.MEMBER.name(), ApplicationUserRole.ADMIN.name(), ApplicationUserRole.EVENTADMIN.name(), ApplicationUserRole.HANDICAPADMIN.name()) // All roles can access the open api pages once logged in
+                .antMatchers("/management/**").hasAnyRole(ApplicationUserRole.ADMIN.name(), ApplicationUserRole.EVENTADMIN.name(), ApplicationUserRole.HANDICAPADMIN.name()) // only admin or eventAdmin handicapAdmin can access management pages
+                //The below are replaced by preauthorisation annotation in the managementController classes.
 //                .antMatchers(HttpMethod.DELETE, "/management/api/v1/courses/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
 //                .antMatchers(HttpMethod.POST, "/management/api/v1/courses/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
 //                .antMatchers(HttpMethod.PUT, "/management//courses/**").hasAuthority(ApplicationUserPermission.COURSE_WRITE.getPermission())
@@ -51,12 +53,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/management/api/v1/members/**").hasAuthority(ApplicationUserPermission.MEMBER_READ.getPermission())
                 .anyRequest().authenticated() //client must supply username and password
                 .and()
-                .httpBasic(); //use basic authentication
+                .formLogin() //use form based authentication
+                .loginPage("/login").permitAll() // set custom login page
+                .defaultSuccessUrl("/courses", true) //send to this page after login
+                .and()
+                .rememberMe().tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // allow extension of sessionID to (default) 2 weeks rather than expiring within 30 mins of inactivity this code extends to 21 days
+                .key("somethingverysecure");
     }
 
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
+
+        //Create some user accounts for testing
         UserDetails dannyjebb = User.builder()
                 .username("dannyjebb")
                 .password(passwordEncoder.encode("P4ssword"))
@@ -64,24 +73,32 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorities(ApplicationUserRole.MEMBER.getGrantedAuthorities())
                 .build();
 
-        UserDetails katyjebb =  User.builder()
-                .username("katyjebb")
+        UserDetails mikedobson =  User.builder()
+                .username("mikedobson")
                 .password(passwordEncoder.encode("P4ssword"))
 //                .roles(ApplicationUserRole.ADMIN.name())
                 .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
                 .build();
 
-        UserDetails emilyjebb =  User.builder()
-                .username("emilyjebb")
+        UserDetails dancross =  User.builder()
+                .username("dancross")
                 .password(passwordEncoder.encode("P4ssword"))
 //                .roles(ApplicationUserRole.EVENTADMIN.name())
                 .authorities(ApplicationUserRole.EVENTADMIN.getGrantedAuthorities())
                 .build();
 
+        UserDetails leeoconnell =  User.builder()
+                .username("leeoconnell")
+                .password(passwordEncoder.encode("P4ssword"))
+//                .roles(ApplicationUserRole.HANDICAPADMIN.name())
+                .authorities(ApplicationUserRole.HANDICAPADMIN.getGrantedAuthorities())
+                .build();
+
         return new InMemoryUserDetailsManager(
                 dannyjebb,
-                katyjebb,
-                emilyjebb
+                mikedobson,
+                dancross,
+                leeoconnell
         );
     }
 }

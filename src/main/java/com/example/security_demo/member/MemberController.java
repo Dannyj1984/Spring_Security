@@ -15,10 +15,16 @@ public class MemberController {
 
     //A list of new members
     private static final List<Member> MEMBERS = Arrays.asList(
-            new Member(1, "dannyjebb", "P4ssword"),
-            new Member(2, "katyjebb", "P4ssword"),
-            new Member(3, "emilyjebb", "P4ssword")
+            new Member(1, "dannyjebb", "P4ssword", 4.0f),
+            new Member(2, "mikedobson", "P4ssword", 18.7f),
+            new Member(3, "dancross", "P4ssword", 8.2f),
+            new Member(3, "leeoconnell", "P4ssword", 14.2f)
     );
+
+    @GetMapping
+    public List<Member> getMembers() {
+        return MEMBERS;
+    }
 
     //path the view member details after the original path in requestmapping
     @GetMapping(path = "{memberId}")

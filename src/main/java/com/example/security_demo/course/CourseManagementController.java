@@ -14,9 +14,9 @@ public class CourseManagementController {
 
     //A list of new members
     private static final List<Course> COURSES = Arrays.asList(
-            new Course(1, "Stamford - white", 68.9f),
-            new Course(2, "Burnley - white", 70.2f),
-            new Course(3, "Disley - white", 69.5f)
+            new Course(1L, "Stamford - white", 68.9, 128, 70),
+            new Course(2L, "Burnley - white", 70.2, 135, 70),
+            new Course(3L, "Disley - white", 69.5, 129, 70)
     );
 
     @GetMapping

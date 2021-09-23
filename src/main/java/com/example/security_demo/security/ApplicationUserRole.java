@@ -15,7 +15,7 @@ public enum ApplicationUserRole {
     MEMBER(Sets.newHashSet()),
     ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, EVENT_READ, EVENT_WRITE, MEMBER_READ, MEMBER_WRITE)),
     EVENTADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, EVENT_READ, EVENT_WRITE)),
-    HANDICAPADMIN(Sets.newHashSet(MEMBER_READ, MEMBER_WRITE));
+    HANDICAPADMIN(Sets.newHashSet(MEMBER_READ, HANDICAP_WRITE));
 
     private final Set<ApplicationUserPermission> permissions;
 

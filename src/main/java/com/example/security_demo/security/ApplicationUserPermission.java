@@ -6,7 +6,8 @@ public enum ApplicationUserPermission {
     EVENT_READ("event:read"),
     EVENT_WRITE("event:write"),
     COURSE_WRITE("course:write"),
-    COURSE_READ("course:read");
+    COURSE_READ("course:read"),
+    HANDICAP_WRITE("handicap:write");
 
     private final String permission;
 

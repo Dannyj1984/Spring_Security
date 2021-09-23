@@ -16,9 +16,9 @@ public class EventController {
 
     //A list of new eventd
     private static final List<Event> EVENTS = Arrays.asList(
-            new Event(1, "Stamford"),
-            new Event(2, "Burnley"),
-            new Event(3, "Disley")
+            new Event(1L, "Stamford", 1L),
+            new Event(2L, "Burnley", 2L),
+            new Event(3L, "Disley", 3L)
     );
 
     @GetMapping

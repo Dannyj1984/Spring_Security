@@ -15,10 +15,10 @@ public class MemberController {
 
     //A list of new members
     private static final List<Member> MEMBERS = Arrays.asList(
-            new Member(1, "dannyjebb", "P4ssword", 4.0f),
-            new Member(2, "mikedobson", "P4ssword", 18.7f),
-            new Member(3, "dancross", "P4ssword", 8.2f),
-            new Member(3, "leeoconnell", "P4ssword", 14.2f)
+            new Member("dannyjebb", "Danny", "Jebb", "dannyjebb@gmail.com", "USER", 4.0, 0,4.0,0,0,"P4ssword"),
+            new Member("mikedobson", "Mike", "Dobson", "mikedobson@gmail.com", "ADMIN", 18.7, 0,18.7,0,0,"P4ssword"),
+            new Member("dancross", "Dan", "Cross", "dancross@gmail.com", "EVENTADMIN", 8.2, 0,8.2,0,0,"P4ssword"),
+            new Member("leeoconnell", "Lee", "Oconnell", "leeoconnell@gmail.com", "HADNICAPADMIN", 14.2, 0,14.2,0,0,"P4ssword")
     );
 
     @GetMapping

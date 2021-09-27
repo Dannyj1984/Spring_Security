@@ -1,9 +1,14 @@
 package com.example.security_demo.events;
 
+import com.example.security_demo.course.Course;
+import com.example.security_demo.member.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -29,24 +34,37 @@ public class Event {
             generator = "event_sequence"
     )
     @Column(
-            name = "id",
+            name = "eventid",
             updatable = false
     )
     private Long eventId;
 
     @Column(
-            name = "eventName",
+            name = "eventname",
             nullable = false,
             columnDefinition = "TEXT"
     )
     private String eventName;
 
     @Column(
-            name = "courseId",
+            name = "eventdate",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    private LocalDateTime eventDate;
+
+    @Column(
+            name = "courseid",
             nullable = false,
             columnDefinition = "TEXT"
     )
     private Long courseId;
+
+//    @ManyToMany
+//    private Set<Member> attendees;
+//
+//    @OneToOne
+//    private Course course;
 
     public Event(Long eventId, String eventName, Long courseId) {
         this.eventId = eventId;

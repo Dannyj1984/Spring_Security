@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,11 @@
     </head>
     <body>
         <div class="container">
-            <h1> Courses</h1>
-            <p>Spring boot security</p>
+            <h1> Admin</h1>
+            <div class="container text-center">
+                <h3><a th:href="@{/users}">List of Users</a></h3>
+                <h3><a th:href="@{/register}">Register</a></h3>
+            </div>
             <form class="form-signin text-center" method="get" action="/logout">
                 <button class="btn-danger btn-block" type="submit">Logout</button>
             </form>

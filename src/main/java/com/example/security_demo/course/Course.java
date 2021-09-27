@@ -29,34 +29,34 @@ public class Course {
             generator = "course_sequence"
     )
     @Column(
-            name = "id",
+            name = "courseid",
             updatable = false
     )
     private Long courseId;
 
     @Column(
-            name = "courseName",
+            name = "coursename",
             nullable = false,
             columnDefinition = "TEXT"
     )
     private String courseName;
 
     @Column(
-            name = "courseRating",
+            name = "courserating",
             nullable = false,
             columnDefinition = "DECIMAL"
     )
     private double courseRating;
 
     @Column(
-            name = "courseSlope",
+            name = "courseslope",
             nullable = false,
             columnDefinition = "NUMERIC"
     )
     private int courseSlope;
 
     @Column(
-            name = "coursePar",
+            name = "coursepar",
             nullable = false,
             columnDefinition = "NUMERIC"
     )
